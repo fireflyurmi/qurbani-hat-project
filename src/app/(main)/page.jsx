@@ -9,7 +9,6 @@ export default function Home() {
 
   return (
     <main className="bg-[#f0f9f6] min-h-screen pb-20">
-      {/* 1. HERO SECTION */}
       <section className="relative w-full h-137.5 overflow-hidden">
         <Image
           src={bannerImg}
@@ -45,9 +44,9 @@ export default function Home() {
             {featuredAnimals.map((animal) => (
               <div
                 key={animal.id}
-                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 border border-emerald-50"
+                className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-4 border border-emerald-50"
               >
-                <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
+                <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4 hover:scale-105 transition-transform duration-500">
                   <Image
                     src={animal.image}
                     alt={animal.name}
