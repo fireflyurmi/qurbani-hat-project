@@ -1,22 +1,22 @@
 "use client";
-import React, { useState, use } from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import animals from "@/lib/data.json";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const AnimalDetailsPage = ({ params: paramsPromise }) => {
   const params = use(paramsPromise);
   const { id } = params;
   const animal = animals.find((a) => a.id === parseInt(id));
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   if (!animal) {
     return (
@@ -30,21 +30,15 @@ const AnimalDetailsPage = ({ params: paramsPromise }) => {
       </main>
     );
   }
-
-  const handleBooking = (e) => {
-    e.preventDefault();
+  const handleBooking = (data) => {
     toast.success(`Booking request for ${animal.name} sent successfully!`, {
-      position: "top-right",
-      autoClose: 3000,
       theme: "colored",
     });
-
-    setFormData({ name: "", email: "", phone: "", address: "" });
+    reset();
   };
 
   return (
     <main className="bg-[#f0f9f6] min-h-screen py-12 px-6">
-      <ToastContainer />
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-10">
         <div className="flex-1 bg-white p-8 rounded-2xl shadow-sm border border-emerald-50">
           <div className="relative h-96 w-full rounded-xl overflow-hidden mb-6">
@@ -111,74 +105,83 @@ const AnimalDetailsPage = ({ params: paramsPromise }) => {
               Booking Form
             </h2>
 
-            <form onSubmit={handleBooking} className="space-y-4">
+            <form onSubmit={handleSubmit(handleBooking)} className="space-y-4">
               <div>
                 <label className="block text-sm font-bold text-gray-600 mb-1">
                   Name
                 </label>
                 <input
-                  required
                   type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
                   placeholder="Your Full Name"
+                  {...register("name", { required: "Name is required" })}
                   className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-600 mb-1">
                   Email
                 </label>
                 <input
-                  required
                   type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  placeholder="email@example.com"
+                  placeholder="Enter your mail"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email format",
+                    },
+                  })}
                   className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-600 mb-1">
                   Phone
                 </label>
                 <input
-                  required
                   type="text"
-                  pattern="[0-9]{11}"
-                  value={formData.phone}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/\D/g, "");
-                    setFormData({ ...formData, phone: val });
-                    e.target.setCustomValidity("");
-                  }}
-                  onInvalid={(e) =>
-                    e.target.setCustomValidity(
-                      "invalid phone number, please enter 11 digit valid number",
-                    )
-                  }
-                  placeholder="01XXXXXXXXX"
+                  placeholder="+8801XXXXXXXXX"
+                  {...register("phone", {
+                    required: "Phone number is required",
+                    pattern: {
+                      value: /^\+?[0-9]{11,14}$/,
+                      message:
+                        "Enter a valid phone number",
+                    },
+                  })}
                   className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.phone.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-600 mb-1">
                   Address
                 </label>
                 <textarea
-                  required
                   rows="3"
-                  value={formData.address}
-                  onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })
-                  }
                   placeholder="Your delivery address"
+                  {...register("address", { required: "Address is required" })}
                   className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all resize-none"
                 ></textarea>
+                {errors.address && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.address.message}
+                  </p>
+                )}
               </div>
 
               <button
@@ -188,10 +191,6 @@ const AnimalDetailsPage = ({ params: paramsPromise }) => {
                 Book Now
               </button>
             </form>
-
-            <p className="text-[10px] text-gray-400 text-center mt-4 italic">
-              * Private route: You must be logged in to complete booking.
-            </p>
           </div>
         </div>
       </div>
