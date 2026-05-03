@@ -4,18 +4,34 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
-
-    const {
+  const router = useRouter();
+  const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const handleLogin = () => {};
+  const handleLogin = async (formData) => {
+    const { data, error } = await authClient.signIn.email({
+      email: formData.email,
+      password: formData.password,
+      rememberMe: true,
+      callbackURL: "/",
+    });
+    if (error) {
+      toast.error(error.message || "Login failed");
+    } else {
+      toast.success("Welcome back!");
+      router.push("/");
+    }
+  };
 
   const handleGoogleLogin = () => {
     // Functionality will be added in the next step
@@ -60,8 +76,11 @@ const LoginPage = () => {
                 })}
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
-              <span onClick={()=> setIsShowPassword(!isShowPassword)} className="absolute right-2 top-10 cursor-pointer">
-                { isShowPassword ? <FaEye/> : <FaEyeSlash/>}
+              <span
+                onClick={() => setIsShowPassword(!isShowPassword)}
+                className="absolute right-2 top-10 cursor-pointer"
+              >
+                {isShowPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
               {errors.password && (
                 <p className="text-red-500 font-mono">

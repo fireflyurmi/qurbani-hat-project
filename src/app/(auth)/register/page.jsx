@@ -4,8 +4,12 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -13,8 +17,22 @@ const RegisterPage = () => {
   } = useForm();
 
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const handleRegister = (formData) => {
+  const handleRegister = async (formData) => {
     const { email, name, photo, password } = formData;
+
+    const { data, error } = await authClient.signUp.email({
+      name: name,
+      email: email,
+      password: password,
+      image: photo,
+    });
+
+    if (error) {
+      toast.error(error.message || "Registration failed");
+    } else {
+      toast.success("Account created! Please login.");
+      router.push("/login");
+    }
   };
 
   return (
