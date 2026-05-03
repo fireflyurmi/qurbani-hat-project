@@ -1,36 +1,47 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const RegisterPage = () => {
-  const handleRegister = (e) => {
-    e.preventDefault();
-    // Functionality will be added in the next step
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const handleRegister = (formData) => {
+    const { email, name, photo, password } = formData;
   };
 
   return (
     <main className="min-h-screen bg-[#f0f9f6] flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-emerald-50 overflow-hidden">
         <div className="p-8">
-          <h2 className="text-3xl font-black text-[#2d4a3e] text-center uppercase tracking-tight mb-2">
-            Sign Up
+          <h2 className="text-3xl font-black text-[#2d4a3e] text-center tracking-tight mb-2">
+            Registration Form
           </h2>
           <p className="text-gray-400 text-center text-sm mb-8">
             Create your account from here
           </p>
 
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
                 Full Name
               </label>
               <input
-                required
                 type="text"
-                placeholder="Your Name"
+                placeholder="Enter your name"
+                {...register("name", { required: "Name field is required" })}
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
+              {errors.name && (
+                <p className="text-red-500 font-mono">{errors.name.message}</p>
+              )}
             </div>
 
             <div>
@@ -38,11 +49,14 @@ const RegisterPage = () => {
                 Email Address
               </label>
               <input
-                required
                 type="email"
-                placeholder="email@example.com"
+                placeholder="Enter your mail"
+                {...register("email", { required: "Email field is required" })}
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
+              {errors.email && (
+                <p className="text-red-500 font-mono">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
@@ -50,23 +64,39 @@ const RegisterPage = () => {
                 Photo URL
               </label>
               <input
-                required
                 type="url"
                 placeholder="https://image-link.com"
+                {...register("photo", { required: "URL field is required" })}
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
+              {errors.photo && (
+                <p className="text-red-500 font-mono">{errors.photo.message}</p>
+              )}
             </div>
 
-            <div>
+            <div className="relative">
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
                 Password
               </label>
               <input
-                required
-                type="password"
-                placeholder="••••••••"
+                type={isShowPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                {...register("password", {
+                  required: "Password field is required",
+                })}
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
+              <span
+                onClick={() => setIsShowPassword(!isShowPassword)}
+                className="absolute right-2 top-10 cursor-pointer"
+              >
+                {isShowPassword ? <FaEye /> : <FaEyeSlash />}
+              </span>
+              {errors.password && (
+                <p className="text-red-500 font-mono">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <button
