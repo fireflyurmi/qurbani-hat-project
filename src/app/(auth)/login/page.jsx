@@ -7,6 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import LottieAnimation from "@/components/shared/LottieAnimation";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -15,11 +16,10 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const handleLogin = async (formData) => {
-    const { data, error } = await authClient.signIn.email({
+    const { error } = await authClient.signIn.email({
       email: formData.email,
       password: formData.password,
       rememberMe: true,
@@ -28,7 +28,7 @@ const LoginPage = () => {
     if (error) {
       toast.error(error.message || "Login failed");
     } else {
-      toast.success("Welcome!!!");
+      toast.success("Welcome back!");
       router.push("/");
     }
   };
@@ -44,6 +44,13 @@ const LoginPage = () => {
     <main className="min-h-screen bg-[#f0f9f6] flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-emerald-50 overflow-hidden">
         <div className="p-8">
+          <div className="flex justify-center -mt-4 mb-2">
+            <LottieAnimation
+              animationPath="/animations/cow.json"
+              width="150px"
+            />
+          </div>
+
           <h2 className="text-3xl font-black text-[#2d4a3e] text-center tracking-tight mb-2">
             User Login
           </h2>
@@ -63,7 +70,9 @@ const LoginPage = () => {
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
               {errors.email && (
-                <p className="text-red-500 font-mono">{errors.email.message}</p>
+                <p className="text-red-500 font-mono text-xs mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
             <div className="relative">
@@ -80,12 +89,12 @@ const LoginPage = () => {
               />
               <span
                 onClick={() => setIsShowPassword(!isShowPassword)}
-                className="absolute right-2 top-10 cursor-pointer"
+                className="absolute right-4 top-10 cursor-pointer text-gray-400"
               >
                 {isShowPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
               {errors.password && (
-                <p className="text-red-500 font-mono">
+                <p className="text-red-500 font-mono text-xs mt-1">
                   {errors.password.message}
                 </p>
               )}

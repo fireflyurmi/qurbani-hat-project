@@ -7,6 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import LottieAnimation from "@/components/shared/LottieAnimation";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -15,15 +16,14 @@ const RegisterPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const handleRegister = async (formData) => {
     const { email, name, photo, password } = formData;
-    const { data, error } = await authClient.signUp.email({
-      name: name,
-      email: email,
-      password: password,
+    const { error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
       image: photo,
     });
 
@@ -38,7 +38,7 @@ const RegisterPage = () => {
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/", 
+      callbackURL: "/",
     });
   };
 
@@ -46,6 +46,13 @@ const RegisterPage = () => {
     <main className="min-h-screen bg-[#f0f9f6] flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-emerald-50 overflow-hidden">
         <div className="p-8">
+          <div className="flex justify-center -mt-4 mb-2">
+            <LottieAnimation
+              animationPath="/animations/cow.json"
+              width="150px"
+            />
+          </div>
+
           <h2 className="text-3xl font-black text-[#2d4a3e] text-center tracking-tight mb-2">
             Registration Form
           </h2>
@@ -65,7 +72,9 @@ const RegisterPage = () => {
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
               {errors.name && (
-                <p className="text-red-500 font-mono">{errors.name.message}</p>
+                <p className="text-red-500 font-mono text-xs mt-1">
+                  {errors.name.message}
+                </p>
               )}
             </div>
             <div>
@@ -74,12 +83,14 @@ const RegisterPage = () => {
               </label>
               <input
                 type="email"
-                placeholder="Enter your mail"
+                placeholder="Enter your email"
                 {...register("email", { required: "Email field is required" })}
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
               {errors.email && (
-                <p className="text-red-500 font-mono">{errors.email.message}</p>
+                <p className="text-red-500 font-mono text-xs mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
             <div>
@@ -93,7 +104,9 @@ const RegisterPage = () => {
                 className="w-full px-4 py-3 rounded-xl border border-emerald-100 outline-none focus:ring-2 focus:ring-[#fbbf24] bg-gray-50 transition-all"
               />
               {errors.photo && (
-                <p className="text-red-500 font-mono">{errors.photo.message}</p>
+                <p className="text-red-500 font-mono text-xs mt-1">
+                  {errors.photo.message}
+                </p>
               )}
             </div>
             <div className="relative">
@@ -110,17 +123,16 @@ const RegisterPage = () => {
               />
               <span
                 onClick={() => setIsShowPassword(!isShowPassword)}
-                className="absolute right-2 top-10 cursor-pointer"
+                className="absolute right-4 top-10 cursor-pointer text-gray-400"
               >
                 {isShowPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
               {errors.password && (
-                <p className="text-red-500 font-mono">
+                <p className="text-red-500 font-mono text-xs mt-1">
                   {errors.password.message}
                 </p>
               )}
             </div>
-
             <button
               type="submit"
               className="w-full bg-[#fbbf24] hover:bg-[#f59e0b] text-[#064e3b] font-black py-4 rounded-xl uppercase tracking-widest transition-all shadow-md active:scale-95 mt-4"

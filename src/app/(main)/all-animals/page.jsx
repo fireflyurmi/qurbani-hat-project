@@ -12,7 +12,7 @@ const AllAnimalsPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1200);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -120,3 +120,4 @@ const AllAnimalsPage = () => {
 };
 
 export default AllAnimalsPage;
+export const dynamic = 'force-dynamic';
