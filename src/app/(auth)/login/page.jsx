@@ -33,8 +33,11 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Functionality will be added in the next step
+  const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
   };
 
   return (
@@ -63,7 +66,6 @@ const LoginPage = () => {
                 <p className="text-red-500 font-mono">{errors.email.message}</p>
               )}
             </div>
-
             <div className="relative">
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
                 Password
@@ -88,7 +90,6 @@ const LoginPage = () => {
                 </p>
               )}
             </div>
-
             <button
               type="submit"
               className="w-full bg-[#064e3b] hover:bg-[#043d2e] text-white font-bold py-4 rounded-xl uppercase tracking-widest transition-all shadow-md active:scale-95"
@@ -117,7 +118,7 @@ const LoginPage = () => {
           </button>
 
           <p className="mt-8 text-center text-sm text-gray-500">
-            Don&apos; have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="text-emerald-600 font-bold hover:underline"

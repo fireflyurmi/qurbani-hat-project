@@ -17,9 +17,9 @@ const RegisterPage = () => {
   } = useForm();
 
   const [isShowPassword, setIsShowPassword] = useState(false);
+
   const handleRegister = async (formData) => {
     const { email, name, photo, password } = formData;
-
     const { data, error } = await authClient.signUp.email({
       name: name,
       email: email,
@@ -33,6 +33,13 @@ const RegisterPage = () => {
       toast.success("Account created! Please login.");
       router.push("/login");
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/", 
+    });
   };
 
   return (
@@ -61,7 +68,6 @@ const RegisterPage = () => {
                 <p className="text-red-500 font-mono">{errors.name.message}</p>
               )}
             </div>
-
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
                 Email Address
@@ -76,7 +82,6 @@ const RegisterPage = () => {
                 <p className="text-red-500 font-mono">{errors.email.message}</p>
               )}
             </div>
-
             <div>
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
                 Photo URL
@@ -91,7 +96,6 @@ const RegisterPage = () => {
                 <p className="text-red-500 font-mono">{errors.photo.message}</p>
               )}
             </div>
-
             <div className="relative">
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
                 Password
@@ -134,7 +138,10 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-xl transition-all active:scale-95 shadow-sm">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-xl transition-all active:scale-95 shadow-sm"
+          >
             <FcGoogle className="text-2xl" />
             <span>Google Register</span>
           </button>
