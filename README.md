@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# <p align="center">🌿 QurbaniHat</p>
+<p align="center">
+  <b>The Ethical & Modern Livestock Marketplace</b>
+</p>
 
-## Getting Started
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js" alt="Next.js">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind">
+  <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb" alt="MongoDB">
+  <img src="https://img.shields.io/badge/Better_Auth-Secure-blueviolet?style=for-the-badge" alt="Auth">
+</p>
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🚀 Live Link
+[**Experience QurbaniHat Live →**](https://qurbani-hat.vercel.app)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 📖 Project Purpose
+**QurbaniHat** is a high-performance marketplace platform built to modernize the ethical sourcing of livestock. Utilizing the **Next.js 15 Turbopack** engine, it delivers a lightning-fast, visually rich experience that simplifies cattle selection for the holy occasion of Qurbani. The architecture focuses on secure user sessions and real-time inventory management.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 🛠 Tech Stack
+This project relies on a robust, modern stack to provide a premium user experience:
 
-To learn more about Next.js, take a look at the following resources:
+* **Next.js 15:** Core framework utilizing App Router and Server Actions.
+* **Tailwind CSS:** Professional UI styling with a nature-inspired emerald palette.
+* **Better Auth:** Secure session management supporting Google OAuth and Credentials.
+* **MongoDB Atlas:** Reliable NoSQL data storage with optimized adapters.
+* **React Spinners:** High-performance "RingLoader" for smooth loading transitions.
+* **Lottie-react:** Interactive vector animations for modern storytelling.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📸 Previews of the App
 
-## Deploy on Vercel
+<p align="center">
+  <img src="preview.png" width="95%" alt="Main Dashboard" />
+</p>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<p align="center">
+  <img src="preview(2).png" width="48%" />
+  <img src="preview(3).png" width="48%" />
+</p>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="center">
+  <img src="preview(4).png" width="31%" />
+  <img src="preview(5).png" width="31%" />
+  <img src="preview.png" width="31%" /> 
+</p>
+
+---
+
+### 🌟 Key Features
+* **🛡️ Secure Proxy Architecture:** Implementation of `src/proxy.js` to handle real-time session validation and route protection.
+* **⚡ Forced Dynamic Rendering:** Leverages `force-dynamic` logic to ensure users always receive up-to-date data without stale cache issues.
+* **📊 Smart Inventory Filtering:** Dynamic price-based sorting (Low-to-High / High-to-Low) with optimized state management.
+* **🔐 Multi-Strategy Authentication:** Secure login flow supporting both social integration and traditional credentials.
+* **🎨 Premium UI Design:** A custom-crafted interface featuring Emerald-Gold accents and responsive layouts.
+
+---
+
+### 🚀 Setup and Installation
+1.  **Clone the repository:** ```bash
+    git clone [https://github.com/your-username/qurbani-hat.git](https://github.com/your-username/qurbani-hat.git)
+    ```
+2.  **Install dependencies:** ```bash
+    npm install
+    ```
+3.  **Environment Setup:** Configure your `.env` with `MONGODB_URI`, `BETTER_AUTH_SECRET`, and Google Client keys.
+4.  **Launch:** ```bash
+    npm run dev
+    ```
+
+---
+<p align="center">
+  <i>Developed with precision for a smooth and ethical livestock trading experience.</i>
+</p>
