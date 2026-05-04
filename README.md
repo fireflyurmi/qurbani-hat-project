@@ -13,7 +13,7 @@
 ---
 
 ### 🚀 Live Link
-[**Experience QurbaniHat Live →**](https://qurbani-hat-project.vercel.app)
+[**Experience QurbaniHat Live →**](https://qurbani-hat-project-opal.vercel.app/)
 
 ---
 
